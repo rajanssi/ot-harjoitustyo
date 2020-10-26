@@ -1,3 +1,7 @@
-<h1>Ohjelmistotekniikan harjoitustyö ja laskarit. Syksy 2020.</h1>
+<h1>Ohjelmistotekniikka, harjoitustyö</h1><hr>
+<h2>Tehtävät</h2><hr>
+<h3>Viikko 1</h3>
 
-<b>Ensimmäisen</b> viikon <i>tehtävät</i> on tehty.
+[gitlog.txt](https://github.com/rajanssi/ot-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
+
+[komentorivi.txt](https://github.com/rajanssi/ot-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)
