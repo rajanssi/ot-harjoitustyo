@@ -15,3 +15,5 @@
 [Testauskattavuus](https://github.com/rajanssi/ot-harjoitustyo/blob/master/laskarit/viikko2/testikattavuus.png)
 
 [Projektin vaatimusmäärittely](https://github.com/rajanssi/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
+
+[Työaikakirjanpito](https://github.com/rajanssi/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
