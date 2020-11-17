@@ -17,3 +17,11 @@
 [Projektin vaatimusmäärittely](https://github.com/rajanssi/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
 
 [Työaikakirjanpito](https://github.com/rajanssi/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
+
+<h3>Viikko 3</h3>
+
+[Monopoli](https://github.com/rajanssi/ot-harjoitustyo/blob/master/laskarit/viikko3/monopoli.jpg)
+
+[Machine](https://github.com/rajanssi/ot-harjoitustyo/blob/master/laskarit/viikko3/Machine.png)
+
+[HSL](https://github.com/rajanssi/ot-harjoitustyo/blob/master/laskarit/viikko3/HSL.png)
