@@ -14,6 +14,10 @@ Sovellus aukeaa suoraan satunnaisesti generoituun Sudoku-ruudukkoon, josta on ma
 
 Sudokun ratkaisun jälkeen ruudulle tulee viesti, jossa ilmoitetaan Sudokun ratkenneen ja kysytään, haluaako käyttäjä pelata uudestaan.
 
+### Tehty (24.11):
+- Sovellus aukeaa kovakoodattuun Sudoku-ruudukkoon
+- Sudokun ratkettua käyttäjälle ilmoitetaan siitä viestillä
+
 ## Jatkokehitysideoita
 
 Perusversion jälkeen järjestelmää täydennetään ajan salliessa esim. seuraavilla toiminnallisuuksilla
