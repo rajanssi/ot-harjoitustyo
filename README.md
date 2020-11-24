@@ -6,7 +6,7 @@ Kyseessä on klassinen Sudoku-peli. Ajan salliessa sovellukseen voi lisätä its
 
 [Työaikakirjanpito](https://github.com/rajanssi/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 
-[Arkkitehtuurikuvaus](#)
+[Arkkitehtuurikuvaus](https://github.com/rajanssi/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
 
 
 <h2>Komentorivitoiminnot</h2>
