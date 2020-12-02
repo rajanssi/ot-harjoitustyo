@@ -29,3 +29,12 @@ Ohjelman osien suhdetta kuvaava alustava luokkakaavio:
 
 <img src="https://raw.githubusercontent.com/rajanssi/ot-harjoitustyo/master/dokumentaatio/kuvat/a-2.png" width="400">
 
+### Päätoiminnallisuudet
+
+#### Uuden pelin luominen
+
+Kun perusnäkymässä klikataan newGameButton nappia etenee sovelluksen kontrolli seuraavasti:
+
+<img src="https://raw.githubusercontent.com/rajanssi/ot-harjoitustyo/master/dokumentaatio/kuvat/a-3.png" width="700">
+
+Painikkeen painamiseen reagoiva tapahtumankäsittelijä kutsuu sovelluslogiikan GameLogic metodia initGame. Metodissa initGame() luodaan uusi sudoku peli asettamalla kutsumalla Puzzle luokan staattista metodia setPuzzle() ja sitten gameInit() asettaa piilotetut sudokuruudut. Tämän jälkeen asetetaan stagelle uusi Scene olio UserInterface luokan getScene() metodin avulla.
