@@ -8,6 +8,9 @@ Kyseessä on klassinen Sudoku-peli. Ajan salliessa sovellukseen voi lisätä its
 
 [Arkkitehtuurikuvaus](https://github.com/rajanssi/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
 
+<h2>Releaset</h2>
+
+[Viikko 5](https://github.com/rajanssi/ot-harjoitustyo/releases/tag/viikko5)
 
 <h2>Komentorivitoiminnot</h2>
 
