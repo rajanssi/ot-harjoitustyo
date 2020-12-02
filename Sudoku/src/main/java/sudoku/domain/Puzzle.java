@@ -1,30 +1,14 @@
 package sudoku.domain;
 
+import de.sfuhrm.sudoku.Creator;
+import de.sfuhrm.sudoku.GameMatrix;
+
 public class Puzzle {
 
-    private static int[][] cells 
-            =   {{5, 3, 4, 6, 7, 8, 9, 1, 2},
-                {6, 7, 2, 1, 9, 5, 3, 4, 8},
-                {1, 9, 8, 3, 4, 2, 5, 6, 7},
-                {8, 5, 9, 7, 6, 1, 4, 2, 3},
-                {4, 2, 6, 8, 5, 3, 7, 9, 1},
-                {7, 1, 3, 9, 2, 4, 8, 5, 6},
-                {9, 6, 1, 5, 3, 7, 2, 8, 4},
-                {2, 8, 7, 4, 1, 9, 6, 3, 5},
-                {3, 4, 5, 2, 8, 6, 1, 7, 9}};
+    private static byte[][] cells;
+    private static boolean[][] masks;
 
-    private static boolean[][] masks 
-            =   {{false, false, false, false, false, true, false, false, false},
-                {false, false, false, false, false, false, false, false, true},
-                {false, false, false, false, false, false, false, false, false},
-                {false, false, false, false, false, false, false, false, false},
-                {false, false, false, false, false, false, false, false, false},
-                {false, false, false, false, false, false, false, false, false},
-                {false, false, false, false, false, false, false, false, false},
-                {false, false, false, false, false, false, false, false, false},
-                {false, false, false, false, false, false, false, false, false}};
-
-    public static int[][] getCells() {
+    public static byte[][] getCells() {
         return cells;
     }
 
@@ -33,17 +17,20 @@ public class Puzzle {
     }
     
     public static void setPuzzle() {
+        GameMatrix game = Creator.createFull();
+        cells = game.getArray();
+        
         boolean[][] masks 
             =   {{false, false, false, false, false, true, false, false, false},
                 {false, false, false, false, false, false, false, false, true},
                 {false, false, false, false, false, false, false, false, false},
+                {false, false, false, false, true, false, false, false, false},
                 {false, false, false, false, false, false, false, false, false},
+                {false, false, true, false, false, false, false, false, false},
                 {false, false, false, false, false, false, false, false, false},
-                {false, false, false, false, false, false, false, false, false},
-                {false, false, false, false, false, false, false, false, false},
-                {false, false, false, false, false, false, false, false, false},
+                {false, true, false, false, false, false, true, false, false},
                 {false, false, false, false, false, false, false, false, false}};
-        Puzzle.masks    = masks;
+        Puzzle.masks = masks;
     }
     
     

@@ -7,7 +7,7 @@ import sudoku.domain.Puzzle;
 public class SudokuTest {
 
     GameLogic gl;
-    int[][] cells;
+    byte[][] cells;
 
     @Before
     public void setUp() {
