@@ -17,18 +17,6 @@ public class SudokuTest {
     }
 
     @Test
-    public void checkCellFalse() {
-        boolean check = gl.checkCell(5, 0, 8);
-        assertEquals(check, false);
-    }
-
-    @Test
-    public void checkCellTrue() {
-        boolean check = gl.checkCell(0, 5, 8);
-        assertEquals(check, true);
-    }
-
-    @Test
     public void checkmaskFalse() {
         boolean check = Puzzle.getMasks()[5][0];
         assertEquals(check, false);
@@ -50,13 +38,6 @@ public class SudokuTest {
     public void checkCompleteFalse(){
         boolean check = gl.checkComplete();
         assertEquals(check, false);
-    }
-    
-    @Test
-    public void checkCompleteTrue(){
-        gl.setMask(1, 8);
-        boolean check = gl.checkComplete();
-        assertEquals(check, true);
     }
     
     @Test 
