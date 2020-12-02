@@ -29,6 +29,18 @@ mvn jacoco:report
 
 Kattavuusraporttia voi tarkastella avaamalla selaimella tiedosto _target/site/jacoco/index.html_
 
+<h3>Suoritettavan jarin generointi</h3>
+
+Komento
+
+```
+mvn package
+```
+
+generoi hakemistoon target suoritettavan jar-tiedoston Sudoku-1.0-SNAPSHOT.jar
+
+
+
 <h3>Checkstyle</h3>
 
 Tiedostoon [checkstyle.xml](https://github.com/rajanssi/ot-harjoitustyo/blob/master/Sudoku/checkstyle.xml) määrittelemät tarkistukset suoritetaan komennolla
