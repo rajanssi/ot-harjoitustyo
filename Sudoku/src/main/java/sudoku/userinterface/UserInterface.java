@@ -8,67 +8,115 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import sudoku.domain.Timer;
 
+/**
+ * Creates the graphical user interface for the program.
+ */
 public class UserInterface {
 
     private GameLogic game;
-    private final Stage stage;
+    private Stage stage;
     private Scene scene;
+    private Text text;
 
+    /**
+     * Constructor for the UserInterface class that takes in two parameters. As
+     * of now you can just instant the class from start() method without
+     * assignment.
+     *
+     * @param game Handles the logic of a Sudoku puzzle.
+     *
+     * @param stage Stage, where the GUI screen will be drawn into.
+     */
     public UserInterface(GameLogic game, Stage stage) {
         this.game = game;
         this.stage = stage;
-
         scene = new Scene(getScene());
         stage.setScene(scene);
         stage.show();
     }
 
-    public Parent getScene() {
+    private Parent getScene() {
         BorderPane layout = new BorderPane();
         layout.setCenter(setGrid());
-        layout.setRight(newGameButton());
+        layout.setRight(gameDurationText());
+        layout.setTop(newGameButton());
         return layout;
     }
 
     private Button newGameButton() {
         Button bt = new Button("New game");
         bt.setOnAction((event) -> {
-            game.initGame();
-            stage.setScene(new Scene(getScene()));
+            newScene();
         });
 
         return bt;
     }
 
+    private Text gameDurationText() {
+        text = new Text("00.00");
+        Timer timer = new Timer(text);
+
+        return text;
+    }
+
     private GridPane setGrid() {
         GridPane grid = new GridPane();
+
+        for (int x = 0; x < 9; x++) {
+            ColumnConstraints cc = new ColumnConstraints();
+            cc.setFillWidth(true);
+            cc.setHgrow(Priority.ALWAYS);
+            grid.getColumnConstraints().add(cc);
+        }
+
+        for (int y = 0; y < 9; y++) {
+            RowConstraints rc = new RowConstraints();
+            rc.setFillHeight(true);
+            rc.setVgrow(Priority.ALWAYS);
+            grid.getRowConstraints().add(rc);
+        }
+
         for (int row = 0; row < 9; ++row) {
             for (int col = 0; col < 9; ++col) {
                 SudokuCell c = new SudokuCell(row, col);
                 addListener(row, col, c);
-                c.setStyle("-fx-background-color: black, white ;"
-                        + "-fx-background-insets: 0, 0 1 1 0 ;"
-                        + "-fx-border-width: 0 5 5 0;");
                 grid.add(c, row, col);
             }
         }
-        grid.setStyle("-fx-background-color: white ;"
-                + "-fx-padding: 20;");
-        grid.setGridLinesVisible(true);
+        grid.setStyle("-fx-padding: 5;");
+        grid.setMaxSize(600, 600);
+        grid.setMinSize(600, 600);
         return grid;
     }
 
+    private void newScene() {
+        game.initGame();
+        stage.setScene(new Scene(getScene()));
+    }
+
     private void addListener(int x, int y, SudokuCell c) {
-        c.textProperty().addListener((ObservableValue<? extends String> change, String oldVal, String newVal) -> {
-            if (game.checkCell(x, y, Integer.parseInt(newVal))) {
-                // Väliaikainen ratkaisu testauksen vuoksi!
-                System.out.println("oikein!");
+        TextField tf = c.getTextField();
+        tf.textProperty().addListener((ObservableValue<? extends String> change, String oldVal, String newVal) -> {
+            int value;
+            try {
+                value = Integer.parseInt(newVal);
+            } catch (NumberFormatException ex) {
+                value = -1;
+            }
+
+            if (game.checkCell(x, y, value)) {
                 game.setMask(x, y);
-                c.setStyle("-fx-control-inner-background: yellow;");
+                tf.setStyle("-fx-text-fill: green;");
             }
 
             if (game.checkComplete()) {
@@ -78,8 +126,7 @@ public class UserInterface {
                 alert.setContentText(null);
                 alert.showAndWait().ifPresent(rs -> {
                     if (rs == ButtonType.OK) {
-                        game.initGame();
-                        stage.setScene(new Scene(getScene()));
+                        newScene();
                     }
                 });
             }
