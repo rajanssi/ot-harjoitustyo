@@ -16,5 +16,5 @@
 |2.12    | 6 | koodaus, testaus, dokumentaatio, mavenin kanssa taistelu |
 |5-6.12  | 5 | koodaus, suunnittelu |
 |7.12    | 5 | koodaus, suunnittelu |
-|8.12    | 5 | koodaus, dokumentointi |
+|8.12    | 5 | koodaus, javadoc, testaus, dokumentointi |
 | yht    |58  | |
