@@ -12,6 +12,8 @@ Kyseessä on klassinen Sudoku-peli. Ajan salliessa sovellukseen voi lisätä its
 
 [Viikko 5](https://github.com/rajanssi/ot-harjoitustyo/releases/tag/viikko5)
 
+[Viikko 6](https://github.com/rajanssi/ot-harjoitustyo/releases/tag/viikko6)
+
 <h2>Komentorivitoiminnot</h2>
 
 <h3>Testaus</h3>
