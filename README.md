@@ -39,7 +39,15 @@ mvn package
 
 generoi hakemistoon target suoritettavan jar-tiedoston Sudoku-1.0-SNAPSHOT.jar
 
+<h3> JavaDoc </h3>
 
+JavaDoc generoidaan komennolla
+
+```
+mvn javadoc:javadoc
+```
+
+JavaDocia voi tarkastella avaamalla selaimella tiedosto _target/site/apidocs/index.html_
 
 <h3>Checkstyle</h3>
 
