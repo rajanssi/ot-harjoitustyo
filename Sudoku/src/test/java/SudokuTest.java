@@ -1,9 +1,8 @@
-import dao.FileDao;
+import sudoku.dao.FileDao;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import sudoku.domain.GameLogic;
-import sudoku.domain.Puzzle;
 
 public class SudokuTest {
 

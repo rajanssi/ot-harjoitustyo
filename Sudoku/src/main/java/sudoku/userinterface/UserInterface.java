@@ -89,6 +89,12 @@ public class UserInterface {
         for (int row = 0; row < 9; ++row) {
             for (int col = 0; col < 9; ++col) {
                 SudokuCell c = new SudokuCell(row, col);
+
+                if (!game.checkMask(row, col)) {
+                    c.getTextField().setEditable(false);
+                    c.getTextField().setText(game.getCell(row, col) + "");
+                }
+
                 addListener(row, col, c);
                 grid.add(c, row, col);
             }
@@ -100,7 +106,7 @@ public class UserInterface {
     }
 
     private void newScene() {
-        game.initGame();
+        game.newGame();
         stage.setScene(new Scene(getScene()));
     }
 

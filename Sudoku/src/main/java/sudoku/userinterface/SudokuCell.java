@@ -1,6 +1,5 @@
 package sudoku.userinterface;
 
-import sudoku.domain.Puzzle;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
@@ -33,11 +32,13 @@ public class SudokuCell extends StackPane {
         setTextStyle();
         this.getChildren().add(tField);
         
+        /*
         if (!Puzzle.getMasks()[x][y]) {
             tField.setEditable(false);
             tField.setText(Puzzle.getCells()[x][y] + "");
         }
-
+        */
+        
         // Set input validation, NOT COMPLETE
         tField.addEventFilter(KeyEvent.KEY_TYPED, (KeyEvent keyEvent) -> {
             if (!"123456789".contains(keyEvent.getCharacter())) {
