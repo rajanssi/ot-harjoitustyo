@@ -1,5 +1,5 @@
 # Käyttöohje
-Lataa tiedosto [Sudoku-1.0.jar](https://github.com/rajanssi/ot-harjoitustyo/releases/tag/viikko5)
+Lataa tiedosto [Sudoku-1.1.jar](https://github.com/rajanssi/ot-harjoitustyo/releases/tag/viikko6)
 
 ## Ohjelman käynnistäminen
 

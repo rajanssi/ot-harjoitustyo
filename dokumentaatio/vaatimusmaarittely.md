@@ -21,6 +21,10 @@ Sudokun ratkaisun jälkeen ruudulle tulee viesti, jossa ilmoitetaan Sudokun ratk
 #### (2.12):
 - Sovellus generoi nyt satunnaisesti uuden Sudoku-ruudukon ohjelmaa käynnistäessä, pelin jälkeen tai nappia painamalla
 - Nappia painamalla voi aloittaa uuden pelin 
+#### (8.12):
+- Käyttöliittymän Sudokuruudukko on nyt pitkälti valmis. Muut käyttöliittymän osat pitää vielä luoda ja sijoitella.
+- Peliin kuluvaa aikaa seurataan nyt Timer luokan avulla ja se näytetään käyttäjälle.
+- Peli tallettuu lopetuksen yhteydessä (joskin peliä ei voi vielä ladata, joten toiminto ei näy käyttäjälle).
 
 ## Jatkokehitysideoita
 
