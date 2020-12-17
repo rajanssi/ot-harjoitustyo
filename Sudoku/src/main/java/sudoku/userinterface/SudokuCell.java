@@ -32,14 +32,6 @@ public class SudokuCell extends StackPane {
         setTextStyle();
         this.getChildren().add(tField);
         
-        /*
-        if (!Puzzle.getMasks()[x][y]) {
-            tField.setEditable(false);
-            tField.setText(Puzzle.getCells()[x][y] + "");
-        }
-        */
-        
-        // Set input validation, NOT COMPLETE
         tField.addEventFilter(KeyEvent.KEY_TYPED, (KeyEvent keyEvent) -> {
             if (!"123456789".contains(keyEvent.getCharacter())) {
                 keyEvent.consume();
@@ -52,7 +44,7 @@ public class SudokuCell extends StackPane {
     }
 
     private void setTextStyle() {
-        tField.setFont(new Font(20));
+        tField.setFont(new Font(23));
         tField.setAlignment(Pos.CENTER);
         tField.setPrefHeight(64);
         tField.setPrefWidth(64);

@@ -1,17 +1,19 @@
-import sudoku.dao.FileDao;
+import sudoku.dao.FileGameDao;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import sudoku.domain.GameLogic;
+import sudoku.domain.Puzzle;
 
 public class SudokuTest {
 
     GameLogic gl;
     byte[][] cells;
+    Puzzle puz;
 
     @Before
     public void setUp() {
-        gl = new GameLogic(new FileDao(""));
+        gl = new GameLogic(new FileGameDao(""));
         cells = Puzzle.getCells();
         gl.setMask(0, 5);
     }

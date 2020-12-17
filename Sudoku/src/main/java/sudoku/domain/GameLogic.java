@@ -1,23 +1,22 @@
 package sudoku.domain;
 
-import sudoku.dao.FileDao;
+import sudoku.dao.FileGameDao;
 import de.sfuhrm.sudoku.QuadraticArrays;
-import de.sfuhrm.sudoku.output.PlainTextFormatter;
-import java.util.Arrays;
 
 /**
  * GameLogic class handles things like Sudoku related things such as
  * initializing a new game, checking if a cell has been solved and checking if a
  * game has been completed.
  *
- * @author rajanssi
  */
 public class GameLogic {
 
+    private final FileGameDao fileDao;
+    private final Puzzle puzzle;
+    private final Settings settings;
     private boolean[][] masks;
-    private PlainTextFormatter textFormatter;
-    private FileDao fileDao;
-    private Puzzle puzzle;
+    private Difficulty difficulty;
+    private int gameTime;
 
     /**
      *
@@ -27,10 +26,11 @@ public class GameLogic {
      * @param fileDao Takes in a fileDao-class object, that will allow user to
      * save an unfinished game.
      */
-    public GameLogic(FileDao fileDao) {
+    public GameLogic(FileGameDao fileDao, Settings settings) {
+        this.settings = settings;
         this.fileDao = fileDao;
         this.puzzle = new Puzzle();
-        textFormatter = new PlainTextFormatter();
+        this.gameTime = 0;
     }
 
     /**
@@ -49,12 +49,32 @@ public class GameLogic {
         return puzzle.getCell(x, y);
     }
 
+    private void initMasks() {
+        boolean[][] masks = new boolean[9][9];
+        for (int x = 0; x < 9; x++) {
+            System.arraycopy(puzzle.getMasks()[x], 0, masks[x], 0, 9);
+        }
+        this.masks = masks;
+    }
+
     public void setMask(int x, int y) {
         masks[x][y] = false;
     }
 
     public boolean checkMask(int x, int y) {
         return masks[x][y];
+    }
+
+    public boolean getOriginalMask(int x, int y) {
+        return puzzle.getMasks()[x][y];
+    }
+
+    public int getGameTime() {
+        return gameTime;
+    }
+
+    public void setGameTime(int gameTime) {
+        this.gameTime = gameTime;
     }
 
     /**
@@ -80,14 +100,14 @@ public class GameLogic {
      */
     public void initGame() {
         if (!loadGame()) {
-            puzzle.setPuzzle();
-            this.masks = puzzle.getMasks();
+            newGame();
         }
     }
 
     public void newGame() {
-        puzzle.setPuzzle();
-        this.masks = puzzle.getMasks();
+        puzzle.setPuzzle(settings.getDifficulty());
+        initMasks();
+        this.gameTime = 0;
     }
 
     /**
@@ -96,25 +116,19 @@ public class GameLogic {
      *
      * @return true on success, false on failure
      */
-    public boolean saveGame() {
-        String formattedGame = textFormatter.format(puzzle.getGame());
-
-        String masksToString = "";
+    public boolean saveGame(int time) {
+        byte[][] originalMasks = new byte[9][9];
+        byte[][] gameMasks = new byte[9][9];
 
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 9; y++) {
-                if (checkMask(x, y)) {
-                    masksToString += "1";
-                } else {
-                    masksToString += "0";
-                }
+                gameMasks[x][y] = (byte) (checkMask(x, y) ? 1 : 0);
+                originalMasks[x][y] = (byte) (getOriginalMask(x, y) ? 1 : 0);
             }
         }
 
-        System.out.println(masksToString);
-
         try {
-            fileDao.saveFile(formattedGame, masksToString);
+            fileDao.saveFile(puzzle.getGame(), gameMasks, originalMasks, time, settings.getDifficulty());
         } catch (Exception e) {
             return false;
         }
@@ -127,40 +141,38 @@ public class GameLogic {
      *
      * @return
      */
-    public boolean loadGame() {
-        byte[][] sudokuData;
-        try {
-            String[] loadFile = fileDao.loadSudoku();
-            System.out.println(Arrays.toString(loadFile));
-            sudokuData = QuadraticArrays.parse(loadFile);
-        } catch (Exception e) {
-            System.out.println("GL error: " + Arrays.toString(e.getStackTrace()));
-            return false;
-        }
+    private boolean loadGame() {
+        String[] loadData;
+        byte[][] sudokuMatrix;
+        boolean[][] masks = new boolean[9][9], originalMasks = new boolean[9][9];
 
-        System.out.println("loadMasks()");
-        
-        puzzle.setPuzzle(sudokuData);
-        this.masks = puzzle.getMasks();
-
-        byte[][] maskData;
         try {
-            String maskText = fileDao.loadMasks();
+            loadData = fileDao.loadFile();
+            sudokuMatrix = QuadraticArrays.parse(loadData[0].split(";"));
 
             int index = 0;
             for (int x = 0; x < 9; x++) {
                 for (int y = 0; y < 9; y++) {
-                    if (maskText.charAt(index) == '0') {
-                        setMask(x, y);
-                    }
+                    masks[x][y] = loadData[1].charAt(index) == '1';
+                    originalMasks[x][y] = loadData[2].charAt(index) == '1';
                     index++;
                 }
             }
+
+            setGameTime(Integer.parseInt(loadData[3]));
+
+            if (loadData[4].equals("EASY")) {
+                this.difficulty = Difficulty.EASY;
+            } else {
+                this.difficulty = Difficulty.HARD;
+            }
         } catch (Exception e) {
-            System.out.println("Mask error: " + e.getMessage());
+            System.out.println("GL load error: " + e.getMessage());
             return false;
         }
 
+        puzzle.setPuzzle(sudokuMatrix, originalMasks);
+        this.masks = masks;
 
         return true;
     }

@@ -6,3 +6,4 @@
 /Sudoku/target/
 /Sudoku/nbactions.xml
 /Sudoku/nbactions-release-profile.xml
+*.txt
