@@ -1,5 +1,7 @@
 package sudoku.userinterface;
 
+import javafx.scene.Scene;
+
 
 public interface IScene {
     
@@ -10,4 +12,6 @@ public interface IScene {
     void changeScene(IScene scene);
     
     void exitGame();
+    
+    Scene sceneLayout();
 }

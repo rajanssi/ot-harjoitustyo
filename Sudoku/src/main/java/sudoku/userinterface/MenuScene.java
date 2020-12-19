@@ -8,24 +8,24 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import sudoku.domain.GameLogic;
+import sudoku.domain.SudokuService;
 import sudoku.messages.Message;
 
 public class MenuScene implements IScene {
 
-    private final GameLogic game;
     private final Stage stage;
     private final ArrayList<IScene> scenes;
+    private final SudokuService service;
 
-    public MenuScene(Stage stage, GameLogic game) {
-        this.game = game;
+    public MenuScene(Stage stage, SudokuService gameService) {
         this.stage = stage;
+        this.service = gameService;
         scenes = new ArrayList();
     }
 
     @Override
     public void setScene() {
-        stage.setScene(menuSceneLayout());
+        stage.setScene(sceneLayout());
     }
 
     @Override
@@ -56,7 +56,7 @@ public class MenuScene implements IScene {
         });
 
         btnNewGame.setOnAction(e -> {
-            game.newGame();
+            service.newGame();
             changeScene(scenes.get(0)); // Get gameScene from list
         });
 
@@ -64,9 +64,17 @@ public class MenuScene implements IScene {
             changeScene(scenes.get(1)); // Get settingsScene from list
         });
 
+        btnStatistics.setOnAction(e -> {
+            changeScene(scenes.get(2)); // Get statisticsScene from list
+        });
+
         btnQuit.setOnAction(e -> {
             exitGame();
         });
+
+        if (service.getGame().getGameTime() == 0) {
+            btnContinue.setDisable(true);
+        }
 
         // Setup menu buttons
         ArrayList<Button> buttons = new ArrayList();
@@ -91,7 +99,8 @@ public class MenuScene implements IScene {
         return vbButtons;
     }
 
-    private Scene menuSceneLayout() {
+    @Override
+    public Scene sceneLayout() {
         VBox buttonRow = menuButtons();
 
         BorderPane root = new BorderPane();

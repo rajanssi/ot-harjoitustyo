@@ -1,7 +1,6 @@
 package sudoku.userinterface;
 
-import sudoku.domain.GameLogic;
-import javafx.beans.value.ObservableValue;
+import sudoku.domain.Game;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -19,6 +18,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import sudoku.domain.SudokuService;
 import sudoku.messages.Message;
 
 /**
@@ -26,24 +26,25 @@ import sudoku.messages.Message;
  */
 public class GameScene implements IScene {
 
-    private final GameLogic game;
+    private final SudokuService service;
+    private final Game game;
     private final Stage stage;
     private final Text text;
     private final Timer timer;
     private IScene menuScene;
 
     /**
-     * Constructor for the UserInterface class that takes in two parameters. As
+     * Constructor for the UserInterface class that takes in two parameters.As
      * of now you can just instant the class from start() method without
      * assignment.
      *
-     * @param game Handles the logic of a Sudoku puzzle.
      *
      * @param stage Stage, where the GUI screen will be drawn into.
      */
-    public GameScene(Stage stage, GameLogic game) {
-        this.game = game;
+    public GameScene(Stage stage, SudokuService service) {
         this.stage = stage;
+        this.service = service;
+        this.game = service.getGame();
 
         text = new Text("00:00");
         timer = new Timer(text, game.getGameTime());
@@ -57,8 +58,7 @@ public class GameScene implements IScene {
     @Override
     public void setScene() {
         this.stage.setOnCloseRequest(e -> exitGame());
-        this.stage.setScene(gameSceneLayout());
-        System.out.println(game.getGameTime());
+        this.stage.setScene(sceneLayout());
         timer.continueTime(game.getGameTime());
     }
 
@@ -70,18 +70,19 @@ public class GameScene implements IScene {
 
     @Override
     public void exitGame() {
-        game.saveGame(timer.getTime());
+        service.saveGame(timer.getTime());
         stage.close();
     }
 
     private void startNewGame() {
-        game.newGame();
+        service.newGame();
         text.setText("00:00");
         timer.resetTime(text);
-        stage.setScene(gameSceneLayout());
+        stage.setScene(sceneLayout());
     }
 
-    private Scene gameSceneLayout() {
+    @Override
+    public Scene sceneLayout() {
         FlowPane pane = new FlowPane();
         GridPane grid = sudokuGrid();
         GridPane numberPane = new GridPane();
@@ -94,7 +95,7 @@ public class GameScene implements IScene {
         Button btnBackToMenu = new Button(Message.BACKTOMENU());
         btnBackToMenu.setPrefSize(100, 20);
         btnBackToMenu.setOnAction(e -> {
-            game.saveGame(timer.getTime());
+            service.saveGame(timer.getTime());
             game.setGameTime(timer.getTime());
             changeScene(menuScene);
         });
@@ -149,20 +150,20 @@ public class GameScene implements IScene {
             grid.getRowConstraints().add(rc);
         }
 
-        for (int row = 0; row < 9; ++row) {
-            for (int col = 0; col < 9; ++col) {
-                SudokuCell c = new SudokuCell(row, col);
+        for (int x = 0; x < 9; x++) {
+            for (int y = 0; y < 9; y++) {
+                SudokuCell c = new SudokuCell(x, y);
 
-                if (!game.getOriginalMask(row, col)) {
+                if (!game.getOriginalMask(x, y)) {
                     c.getTextField().setEditable(false);
-                    c.getTextField().setText(game.getCell(row, col) + "");
-                } else if (!game.checkMask(row, col)) {
-                    c.getTextField().setText(game.getCell(row, col) + "");
+                    c.getTextField().setText(game.getCell(x, y) + "");
+                } else if (!game.getMask(x, y)) {
+                    c.getTextField().setText(game.getCell(x, y) + "");
                     c.getTextField().setStyle("-fx-text-fill: green;");
                 }
 
-                sudokuCellListener(row, col, c);
-                grid.add(c, row, col);
+                sudokuCellListener(x, y, c);
+                grid.add(c, x, y);
             }
         }
         grid.setStyle("-fx-padding: 5;");
@@ -172,6 +173,9 @@ public class GameScene implements IScene {
     }
 
     private void gameComplete() {
+        
+        service.insertGame(timer.getTime());
+        
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle(Message.CONGRATS());
         alert.setHeaderText(Message.WINMESSAGE());
@@ -187,10 +191,10 @@ public class GameScene implements IScene {
             if (rs == confirm) {
                 startNewGame();
             } else if (rs == deny) {
-                game.newGame();
+                service.newGame();
                 changeScene(menuScene);
             } else if (rs == exit) {
-                game.newGame();
+                service.newGame();
                 exitGame();
             }
         });
@@ -199,20 +203,24 @@ public class GameScene implements IScene {
     private void sudokuCellListener(int x, int y, SudokuCell c) {
         TextField tf = c.getTextField();
 
-        tf.textProperty().addListener((ObservableValue<? extends String> change, String oldVal, String newVal) -> {
+        tf.textProperty().addListener((change, oldVal, newVal) -> {
             int value;
             try {
                 value = Integer.parseInt(newVal);
             } catch (NumberFormatException ex) {
                 value = -1;
             }
-            if (game.checkCell(x, y, value)) {
-                game.setMask(x, y);
-                tf.setStyle("-fx-text-fill: green;");
-            } else if (value == -1) {
-                tf.setStyle("-fx-text-fill: black;");
+
+            if (service.getSettings().isShowMistakes()) {
+                if (game.checkCell(x, y, value)) {
+                    tf.setStyle("-fx-text-fill: green;");
+                } else if (value == -1) {
+                    tf.setStyle("-fx-text-fill: black;");
+                } else {
+                    tf.setStyle("-fx-text-fill: red;");
+                }
             } else {
-                tf.setStyle("-fx-text-fill: red;");
+                game.checkCell(x, y, value);
             }
 
             if (game.checkComplete()) {

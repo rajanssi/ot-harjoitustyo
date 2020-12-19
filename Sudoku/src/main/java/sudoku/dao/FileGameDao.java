@@ -2,10 +2,10 @@ package sudoku.dao;
 
 import de.sfuhrm.sudoku.GameMatrix;
 import de.sfuhrm.sudoku.output.PlainTextFormatter;
+import sudoku.domain.Difficulty;
 import java.util.Scanner;
 import java.io.FileWriter;
 import java.io.File;
-import sudoku.domain.Difficulty;
 
 public class FileGameDao {
 
@@ -15,8 +15,9 @@ public class FileGameDao {
     public FileGameDao(String sudokuFile) {
         this.sudokuFile = sudokuFile;
         this.textFormatter = new PlainTextFormatter();
-    }
 
+    }
+    
     public void saveFile(GameMatrix game, byte[][] masks, byte[][] originalMasks, int time, Difficulty difficulty) {
 
         textFormatter.setLineSeparator(";");
@@ -53,7 +54,7 @@ public class FileGameDao {
             }
             reader.close();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            return null;
         }
         return data;
     }

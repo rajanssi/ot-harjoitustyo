@@ -1,10 +1,5 @@
 package sudoku.userinterface;
 
-import sudoku.messages.Message;
-import sudoku.messages.Language;
-import java.util.ArrayList;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -14,25 +9,35 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import org.controlsfx.control.ToggleSwitch;
 import sudoku.domain.Difficulty;
 import sudoku.domain.Settings;
+import sudoku.domain.SudokuService;
+import sudoku.messages.Message;
+import sudoku.messages.Language;
 
 public class SettingsScene implements IScene {
 
-    private final Stage stage;
+    private final SudokuService service;
     private final Settings settings;
+    private final Stage stage;
     private IScene menuScene;
     private Language language;
     private Difficulty difficulty;
-    private SwitchButton sbAssists;
+    private ToggleSwitch toggle;
 
-    public SettingsScene(Stage stage, Settings settings) {
+    public SettingsScene(Stage stage, SudokuService service) {
         this.stage = stage;
         this.language = Message.getLanguage();
-        this.settings = settings;
+        this.service = service;
+        this.settings = service.getSettings();
         this.difficulty = settings.getDifficulty();
     }
 
@@ -57,11 +62,6 @@ public class SettingsScene implements IScene {
         stage.close();
     }
 
-    private void applyChanges() {
-        System.out.println(sbAssists.isState());
-        settings.applySettings(language, difficulty, sbAssists.isState());
-    }
-
     private ComboBox languageChoices() {
         ComboBox cBox = new ComboBox();
         cBox.getItems().addAll(Message.LANGUAGE_EN(), Message.LANGUAGE_FI());
@@ -72,14 +72,11 @@ public class SettingsScene implements IScene {
             cBox.getSelectionModel().selectFirst();
         }
 
-        cBox.valueProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue ov, String t, String t1) {
-                if (cBox.getValue().equals(Message.LANGUAGE_EN())) {
-                    language = Language.ENGLISH;
-                } else {
-                    language = Language.FINNISH;
-                }
+        cBox.valueProperty().addListener((ov, t, t1) -> {
+            if (cBox.getValue().equals(Message.LANGUAGE_EN())) {
+                language = Language.ENGLISH;
+            } else {
+                language = Language.FINNISH;
             }
         });
 
@@ -96,15 +93,13 @@ public class SettingsScene implements IScene {
             cBox.getSelectionModel().selectFirst();
         }
 
-        cBox.valueProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue ov, String t, String t1) {
-                if (cBox.getValue().equals(Message.DIFFICULTY_E())) {
-                    difficulty = Difficulty.EASY;
-                } else {
-                    difficulty = Difficulty.HARD;
-                }
+        cBox.valueProperty().addListener((ov, t, t1) -> {
+            if (cBox.getValue().equals(Message.DIFFICULTY_E())) {
+                difficulty = Difficulty.EASY;
+            } else {
+                difficulty = Difficulty.HARD;
             }
+
         });
 
         return cBox;
@@ -112,30 +107,51 @@ public class SettingsScene implements IScene {
 
     private VBox setMenuLayout() {
         VBox layout = new VBox();
-        ArrayList<HBox> items = new ArrayList();
 
         // Menu texts
         Label lbLanguage = new Label(Message.LANGUAGE());
         Label lbDifficulty = new Label(Message.DIFFICULTY());
         Label lbAssists = new Label(Message.SHOWMISTAKES());
 
-        lbLanguage.setFont(new Font(15));
-        lbDifficulty.setFont(new Font(15));
-        lbAssists.setFont(new Font(15));
+        lbLanguage.setFont(new Font(18));
+        lbDifficulty.setFont(new Font(18));
+        lbAssists.setFont(new Font(18));
 
         ComboBox cbLanguage = languageChoices();
         ComboBox cbDifficulty = difficultyChoices();
-        sbAssists = new SwitchButton(settings.isShowMistakes());
+        toggle = new ToggleSwitch();
 
-        items.add(new HBox(lbLanguage, cbLanguage));
-        items.add(new HBox(lbDifficulty, cbDifficulty));
-        items.add(new HBox(lbAssists, sbAssists));
+        // Set initial state of toggle switch
+        if (settings.isShowMistakes()) {
+            toggle.setSelected(true);
+        } else {
+            toggle.setSelected(false);
+        }
 
-        items.forEach(item -> {
-            item.setSpacing(100);
-        });
+        GridPane grid = new GridPane();
 
-        layout.getChildren().addAll(items);
+        for (int x = 0; x < 2; x++) {
+            ColumnConstraints cc = new ColumnConstraints();
+            cc.setHgrow(Priority.ALWAYS);
+            grid.getColumnConstraints().add(cc);
+        }
+
+        for (int y = 0; y < 3; y++) {
+            RowConstraints rc = new RowConstraints();
+            rc.setVgrow(Priority.ALWAYS);
+            grid.getRowConstraints().add(rc);
+        }
+
+        grid.add(lbLanguage, 0, 0);
+        grid.add(cbLanguage, 1, 0);
+        grid.add(lbDifficulty, 0, 1);
+        grid.add(cbDifficulty, 1, 1);
+        grid.add(lbAssists, 0, 2);
+        grid.add(toggle, 1, 2);
+
+        grid.setMaxSize(400, 200);
+        grid.setMinSize(400, 200);
+        layout.getChildren().add(grid);
         layout.setSpacing(30);
         layout.setPadding(new Insets(40, 40, 40, 40));
         layout.setAlignment(Pos.CENTER);
@@ -144,11 +160,11 @@ public class SettingsScene implements IScene {
 
     private AnchorPane addAnchorPane() {
         AnchorPane anchorpane = new AnchorPane();
-        Button buttonSave = new Button("Apply (placeholder)");
-        Button buttonCancel = new Button(Message.QUIT());
+        Button buttonSave = new Button(Message.APPLY());
+        Button buttonCancel = new Button(Message.BACKTOMENU());
 
         buttonSave.setOnAction(e -> {
-            applyChanges();
+            service.applySettings(language, difficulty, toggle.isSelected());
         });
 
         buttonCancel.setOnAction(e -> {
@@ -160,23 +176,23 @@ public class SettingsScene implements IScene {
         hb.setSpacing(10);
         hb.getChildren().addAll(buttonSave, buttonCancel);
 
-        anchorpane.getChildren().addAll(hb);   // Add grid from Example 1-5
+        anchorpane.getChildren().addAll(hb);
         AnchorPane.setBottomAnchor(hb, 8.0);
         AnchorPane.setRightAnchor(hb, 5.0);
 
         return anchorpane;
     }
 
-    private Scene sceneLayout() {
+    @Override
+    public Scene sceneLayout() {
         VBox menuItems = setMenuLayout();
         BorderPane root = new BorderPane();
 
-        //Placeholder button
         Button button = new Button(Message.BACKTOMENU());
         button.setOnAction(e -> {
             changeScene(menuScene);
         });
-        //menuItems.getChildren().add(button);
+
         root.setCenter(menuItems);
         root.setBottom(addAnchorPane());
 

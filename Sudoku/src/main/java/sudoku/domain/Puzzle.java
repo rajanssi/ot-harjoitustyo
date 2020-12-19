@@ -7,7 +7,7 @@ import de.sfuhrm.sudoku.Riddle;
 
 /**
  * Contains the Sudoku puzzle for the game, that contains solution and masks for
- * each Sudoku cell. Will need to be updated before final version.
+ * each Sudoku cell. 
  *
  */
 public class Puzzle {
@@ -36,13 +36,7 @@ public class Puzzle {
     public void setPuzzle(byte[][] gameArray, boolean[][] masks) {
         fullGame = gmf.newGameMatrix();
         fullGame.setAll(gameArray);
-        /*
-        boolean[][] masks = new boolean[9][9];
-        for (int x = 0; x < 9; x++) {
-            for (int y = 0; y < 9; y++) {
-                masks[x][y] = true;
-            }
-        }*/
+
         this.masks = masks;
     }
 
@@ -71,22 +65,4 @@ public class Puzzle {
         }
         this.masks = masks;
     }
-
-    public boolean[][] testMasks() {
-
-        boolean[][] masks
-                = {{true, false, false, false, false, false, false, false, false},
-                {false, false, false, false, false, false, false, false, false},
-                {false, false, false, false, false, false, false, false, false},
-                {false, false, false, false, false, false, false, false, false},
-                {false, false, false, false, false, false, false, false, false},
-                {false, false, false, false, false, false, false, false, false},
-                {false, false, false, false, false, false, false, false, false},
-                {false, false, false, false, false, false, false, false, false},
-                {false, false, false, false, false, false, false, false, false},
-                {false, false, false, false, false, false, false, false, false}};
-
-        return masks;
-    }
-
 }

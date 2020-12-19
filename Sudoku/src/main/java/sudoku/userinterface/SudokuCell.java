@@ -13,9 +13,9 @@ import javafx.scene.text.Font;
  */
 public class SudokuCell extends StackPane {
 
-    private TextField tField;
-    private int x;
-    private int y;
+    private final TextField tField;
+    private final int x;
+    private final int y;
     
     /**
      * Constructor for a Sudoku cell, that will be assigned to a grid.

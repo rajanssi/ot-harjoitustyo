@@ -30,7 +30,6 @@ public class FileSettingsDao {
             }
             reader.close();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             return null;
         }
 
