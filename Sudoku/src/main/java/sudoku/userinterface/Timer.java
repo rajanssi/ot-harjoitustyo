@@ -6,10 +6,6 @@ import javafx.event.ActionEvent;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-/**
- * Creates a timer that tracks how much time the user has spent trying to solve
- * a Sudoku puzzle.
- */
 public class Timer {
 
     private Timeline timeline;
@@ -17,13 +13,6 @@ public class Timer {
     private int sec;
     private int min;
 
-    /**
-     * Constructor for the Timer class, that takes in one parameter and starts
-     * tracking time immediately after initialization.
-     *
-     * @param text Text showing elapsed time that will be shown in the GUI and
-     * will be be incremented every second.
-     */
     public Timer(Text text) {
         sec = 0;
         min = 0;

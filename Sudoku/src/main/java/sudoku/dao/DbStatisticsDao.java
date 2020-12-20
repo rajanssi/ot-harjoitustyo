@@ -2,12 +2,21 @@ package sudoku.dao;
 
 import java.sql.*;
 
+/**
+ * Loads and saves data to database.
+ */
 public class DbStatisticsDao {
 
     private Connection connection;
 
-    public DbStatisticsDao(String dbFile) {
-        connection = connect(dbFile);
+    /**
+     * Connects database to the url and sets up a new database if one hasn't
+     * been created yet.
+     *
+     * @param url name of the database url
+     */
+    public DbStatisticsDao(String url) {
+        connection = connect(url);
         init();
     }
 
@@ -15,25 +24,36 @@ public class DbStatisticsDao {
         try {
             connection = DriverManager.getConnection(dbFile);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
             return null;
         }
 
         return connection;
     }
 
-    public void insertGame(int time) {
+    /**
+     * Inserts a completed game to the database.
+     *
+     * @param time Takes in the duration of the completed game
+     * @return true on success
+     */
+    public boolean insertGame(int time) {
         String sqlInsert = "INSERT INTO Games(duration) VALUES (?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sqlInsert)) {
             statement.setInt(1, time);
             statement.executeUpdate();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            return false;
         }
-
+        return true;
     }
 
+    /**
+     * Receives all the data from the database.
+     *
+     * @return integer array that contains count, average, minimum and maximum
+     * durations for each game.
+     */
     public int[] getAll() {
         String query = "SELECT COUNT(*), AVG(Duration), MIN(Duration), MAX(Duration) FROM Games";
         int[] data = new int[4];
@@ -49,14 +69,31 @@ public class DbStatisticsDao {
         return data;
     }
 
-    private void init() {
+    private boolean init() {
         String sqlCreate = "CREATE TABLE IF NOT EXISTS Games (duration INT)";
 
         try (Statement statement = connection.createStatement()) {
             statement.execute(sqlCreate);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            return false;
         }
 
+        return true;
     }
+
+    /**
+     * Delete all records from this table (mainly for testing purposes).
+     *
+     * @return true on success
+     */
+    public boolean emptyTables() {
+        String sqlCreate = "DROP TABLE Games";
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(sqlCreate);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
 }

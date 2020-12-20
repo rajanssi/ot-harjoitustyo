@@ -44,11 +44,11 @@ public class MenuScene implements IScene {
     }
 
     private VBox menuButtons() {
-        Button btnContinue = new Button(Message.CONTINUE());
-        Button btnNewGame = new Button(Message.NEWGAME());
-        Button btnSettings = new Button(Message.SETTINGS());
-        Button btnStatistics = new Button(Message.STATISTICS());
-        Button btnQuit = new Button(Message.QUIT());
+        Button btnContinue = new Button(Message.continueGame());
+        Button btnNewGame = new Button(Message.newGame());
+        Button btnSettings = new Button(Message.settings());
+        Button btnStatistics = new Button(Message.statistics());
+        Button btnQuit = new Button(Message.quit());
 
         // Set actions for menu buttons
         btnContinue.setOnAction(e -> {

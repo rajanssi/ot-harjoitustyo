@@ -7,22 +7,12 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 
-/**
- * Class for creating Sudoku cells, that can be interacted with. 
- * 
- */
 public class SudokuCell extends StackPane {
 
     private final TextField tField;
     private final int x;
     private final int y;
     
-    /**
-     * Constructor for a Sudoku cell, that will be assigned to a grid.
-     * 
-     * @param x X coordinate of this Sudoku cell in a Sudoku grid
-     * @param y Y coordinate of this Sudoku cell in a Sudoku grid
-     */
     public SudokuCell(int x, int y) {
         this.x = x;
         this.y = y;

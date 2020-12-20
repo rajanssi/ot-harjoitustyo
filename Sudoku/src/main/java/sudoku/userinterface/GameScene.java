@@ -21,9 +21,6 @@ import javafx.stage.Stage;
 import sudoku.domain.SudokuService;
 import sudoku.messages.Message;
 
-/**
- * Creates the graphical user interface for the program.
- */
 public class GameScene implements IScene {
 
     private final SudokuService service;
@@ -33,14 +30,6 @@ public class GameScene implements IScene {
     private final Timer timer;
     private IScene menuScene;
 
-    /**
-     * Constructor for the UserInterface class that takes in two parameters.As
-     * of now you can just instant the class from start() method without
-     * assignment.
-     *
-     *
-     * @param stage Stage, where the GUI screen will be drawn into.
-     */
     public GameScene(Stage stage, SudokuService service) {
         this.stage = stage;
         this.service = service;
@@ -92,7 +81,7 @@ public class GameScene implements IScene {
         sudokuBox.setPadding(new Insets(10, 10, 10, 10));
         numberBox.setPadding(new Insets(10, 10, 10, 10));
 
-        Button btnBackToMenu = new Button(Message.BACKTOMENU());
+        Button btnBackToMenu = new Button(Message.backToMenu());
         btnBackToMenu.setPrefSize(100, 20);
         btnBackToMenu.setOnAction(e -> {
             service.saveGame(timer.getTime());
@@ -125,7 +114,7 @@ public class GameScene implements IScene {
     }
 
     private Button newGameButton() {
-        Button bt = new Button(Message.NEWGAME());
+        Button bt = new Button(Message.newGame());
         bt.setOnAction((event) -> {
             startNewGame();
         });
@@ -177,13 +166,13 @@ public class GameScene implements IScene {
         service.insertGame(timer.getTime());
         
         Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle(Message.CONGRATS());
-        alert.setHeaderText(Message.WINMESSAGE());
+        alert.setTitle(Message.congrats());
+        alert.setHeaderText(Message.winMessage());
         alert.setContentText(null);
 
         ButtonType confirm = new ButtonType("OK");
-        ButtonType deny = new ButtonType(Message.BACKTOMENU());
-        ButtonType exit = new ButtonType(Message.QUIT());
+        ButtonType deny = new ButtonType(Message.backToMenu());
+        ButtonType exit = new ButtonType(Message.quit());
 
         alert.getButtonTypes().setAll(confirm, deny, exit);
 

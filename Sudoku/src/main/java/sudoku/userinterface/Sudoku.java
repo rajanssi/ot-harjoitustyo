@@ -1,5 +1,7 @@
 package sudoku.userinterface;
 
+import java.io.FileInputStream;
+import java.util.Properties;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import sudoku.dao.FileGameDao;
@@ -13,9 +15,16 @@ public class Sudoku extends Application {
 
     @Override
     public void init() throws Exception {
-        FileGameDao gameDao = new FileGameDao("savedGame.csv");
-        FileSettingsDao settingsDao = new FileSettingsDao("configs.csv");
-        DbStatisticsDao statisticsDao = new DbStatisticsDao("jdbc:sqlite:statistics.db");
+        Properties properties = new Properties();
+        properties.load(new FileInputStream("config.properties"));
+        
+        String settingsFile = properties.getProperty("settingsFile");
+        String gameFile = properties.getProperty("gameFile");
+        String dbUrl = properties.getProperty("dbUrl");
+
+        FileGameDao gameDao = new FileGameDao(gameFile);
+        FileSettingsDao settingsDao = new FileSettingsDao(settingsFile);
+        DbStatisticsDao statisticsDao = new DbStatisticsDao(dbUrl);
 
         service = new SudokuService(gameDao, settingsDao, statisticsDao);
     }

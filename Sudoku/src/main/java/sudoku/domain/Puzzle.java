@@ -6,9 +6,7 @@ import de.sfuhrm.sudoku.GameMatrixFactory;
 import de.sfuhrm.sudoku.Riddle;
 
 /**
- * Contains the Sudoku puzzle for the game, that contains solution and masks for
- * each Sudoku cell. 
- *
+ * Class for creating Sudoku puzzles.
  */
 public class Puzzle {
 
@@ -17,22 +15,49 @@ public class Puzzle {
     private Riddle riddle;
     private final GameMatrixFactory gmf;
 
+    /**
+     * Constructor, that initializes a new GameMatrixFactory object for creating
+     * new puzzles.
+     */
     public Puzzle() {
         gmf = new GameMatrixFactory();
     }
 
+    /**
+     * Return GameMatrix object that contains values for every cell in this puzzle.
+     * 
+     * @return GameMatrix object
+     */
     public GameMatrix getGame() {
         return fullGame;
     }
 
+    /**
+     * Returns a value of a specified cell.
+     * 
+     * @param x X-coordinate of the specified cell
+     * @param y Y-coordinate of the specified cell
+     * @return Value of the cell specified by the parameters
+     */
     public byte getCell(int x, int y) {
         return fullGame.get(x, y);
     }
 
+    /**
+     * Returns all the masked cells of this puzzle.
+     * 
+     * @return 81 cell 2x2 byte array
+     */
     public boolean[][] getMasks() {
         return masks;
     }
 
+    /**
+     * Sets up a Sudoku puzzle based on an existing game.
+     * 
+     * @param gameArray 81-cell Sudoku array that contains values for all the cells
+     * @param masks Contains information whether a cell is shown or not
+     */
     public void setPuzzle(byte[][] gameArray, boolean[][] masks) {
         fullGame = gmf.newGameMatrix();
         fullGame.setAll(gameArray);
@@ -41,9 +66,11 @@ public class Puzzle {
     }
 
     /**
-     * Creates a new Sudoku Puzzle with Creator class, by setting up each Sudoku
-     * cell to a two dimensional byte array and then setting up all the masked
-     * Sudoku cells.
+     * Creates a new Sudoku puzzle, and sets up a number of masked cells based
+     * on the difficulty set by the user in settings.
+     * 
+     * @param difficulty Takes in a difficulty that will determine how many cells
+     * are shown.
      */
     public void setPuzzle(Difficulty difficulty) {
         fullGame = Creator.createFull();

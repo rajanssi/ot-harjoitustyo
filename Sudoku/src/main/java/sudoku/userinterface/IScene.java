@@ -2,7 +2,6 @@ package sudoku.userinterface;
 
 import javafx.scene.Scene;
 
-
 public interface IScene {
     
     void setScenes(IScene scene);

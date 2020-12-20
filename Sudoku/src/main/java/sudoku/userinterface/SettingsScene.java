@@ -64,7 +64,7 @@ public class SettingsScene implements IScene {
 
     private ComboBox languageChoices() {
         ComboBox cBox = new ComboBox();
-        cBox.getItems().addAll(Message.LANGUAGE_EN(), Message.LANGUAGE_FI());
+        cBox.getItems().addAll(Message.languageEn(), Message.languageFi());
 
         if (language == Language.FINNISH) {
             cBox.getSelectionModel().selectLast();
@@ -73,7 +73,7 @@ public class SettingsScene implements IScene {
         }
 
         cBox.valueProperty().addListener((ov, t, t1) -> {
-            if (cBox.getValue().equals(Message.LANGUAGE_EN())) {
+            if (cBox.getValue().equals(Message.languageEn())) {
                 language = Language.ENGLISH;
             } else {
                 language = Language.FINNISH;
@@ -85,7 +85,7 @@ public class SettingsScene implements IScene {
 
     private ComboBox difficultyChoices() {
         ComboBox cBox = new ComboBox();
-        cBox.getItems().addAll(Message.DIFFICULTY_E(), Message.DIFFICULTY_H());
+        cBox.getItems().addAll(Message.difficultyEasy(), Message.difficultyHard());
 
         if (difficulty == Difficulty.HARD) {
             cBox.getSelectionModel().selectLast();
@@ -94,7 +94,7 @@ public class SettingsScene implements IScene {
         }
 
         cBox.valueProperty().addListener((ov, t, t1) -> {
-            if (cBox.getValue().equals(Message.DIFFICULTY_E())) {
+            if (cBox.getValue().equals(Message.difficultyEasy())) {
                 difficulty = Difficulty.EASY;
             } else {
                 difficulty = Difficulty.HARD;
@@ -109,9 +109,9 @@ public class SettingsScene implements IScene {
         VBox layout = new VBox();
 
         // Menu texts
-        Label lbLanguage = new Label(Message.LANGUAGE());
-        Label lbDifficulty = new Label(Message.DIFFICULTY());
-        Label lbAssists = new Label(Message.SHOWMISTAKES());
+        Label lbLanguage = new Label(Message.language());
+        Label lbDifficulty = new Label(Message.difficulty());
+        Label lbAssists = new Label(Message.showMistakes());
 
         lbLanguage.setFont(new Font(18));
         lbDifficulty.setFont(new Font(18));
@@ -160,11 +160,12 @@ public class SettingsScene implements IScene {
 
     private AnchorPane addAnchorPane() {
         AnchorPane anchorpane = new AnchorPane();
-        Button buttonSave = new Button(Message.APPLY());
-        Button buttonCancel = new Button(Message.BACKTOMENU());
+        Button buttonSave = new Button(Message.apply());
+        Button buttonCancel = new Button(Message.backToMenu());
 
         buttonSave.setOnAction(e -> {
             service.applySettings(language, difficulty, toggle.isSelected());
+            setScene();
         });
 
         buttonCancel.setOnAction(e -> {
@@ -188,7 +189,7 @@ public class SettingsScene implements IScene {
         VBox menuItems = setMenuLayout();
         BorderPane root = new BorderPane();
 
-        Button button = new Button(Message.BACKTOMENU());
+        Button button = new Button(Message.backToMenu());
         button.setOnAction(e -> {
             changeScene(menuScene);
         });

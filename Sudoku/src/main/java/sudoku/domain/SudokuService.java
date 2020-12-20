@@ -7,6 +7,9 @@ import sudoku.dao.FileSettingsDao;
 import sudoku.messages.Language;
 import sudoku.messages.Message;
 
+/**
+ * Handles communication between UI, file/database access and game logic. 
+ */
 public class SudokuService {
 
     private final FileGameDao gameDao;
@@ -17,6 +20,14 @@ public class SudokuService {
     private final Settings settings;
     private final Statistics statistics;
 
+    /**
+     * Takes in data access objects and initializes game, settings and statistics
+     * classes. 
+     * 
+     * @param gameDao Data access object for loading and saving game files
+     * @param settingsDao Data access object for loading and saving settings
+     * @param statisticsDao Data access object that handles data of played games
+     */
     public SudokuService(FileGameDao gameDao, FileSettingsDao settingsDao, DbStatisticsDao statisticsDao) {
         this.gameDao = gameDao;
         this.settingsDao = settingsDao;
@@ -41,24 +52,49 @@ public class SudokuService {
         loadStatistics();
     }
 
+    /**
+     * Returns Game object created in SudokuService class.
+     * 
+     * @return game object
+     */
     public Game getGame() {
         return this.game;
     }
 
+    /** 
+     * Returns Settings object created in SudokuService class.
+     * 
+     * @return Settings object
+     */
     public Settings getSettings() {
         return this.settings;
     }
-
+    
+    /**
+     * Returns Statistics object created in SudokuService class.
+     * 
+     * @return Statistics object
+     */
     public Statistics getStatistics() {
         return this.statistics;
     }
 
+    /**
+     * Sets up a new game from scratch based on the settings given to by the 
+     * user in settings.
+     */
     public void newGame() {
         game.getPuzzle().setPuzzle(settings.getDifficulty());
         game.initMasks();
         game.setGameTime(0);
     }
 
+    /**
+     * Saves current game to a file.
+     * 
+     * @param time Takes in the game time from a timer 
+     * @return true on success
+     */
     public boolean saveGame(int time) {
         byte[][] originalMasks = new byte[9][9];
         byte[][] gameMasks = new byte[9][9];
@@ -77,16 +113,18 @@ public class SudokuService {
         }
         return true;
     }
-
+    
+    /**
+     * Loads a saved game from a file.
+     * 
+     * @return true on success
+     */
     public boolean loadGame() {
-        String[] loadData;
         byte[][] sudokuMatrix;
         boolean[][] masks = new boolean[9][9], originalMasks = new boolean[9][9];
-
         try {
-            loadData = gameDao.loadFile();
+            String[] loadData = gameDao.loadFile();
             sudokuMatrix = QuadraticArrays.parse(loadData[0].split(";"));
-
             int index = 0;
             for (int x = 0; x < 9; x++) {
                 for (int y = 0; y < 9; y++) {
@@ -95,9 +133,7 @@ public class SudokuService {
                     index++;
                 }
             }
-
             game.setGameTime(Integer.parseInt(loadData[3]));
-
             if (loadData[4].equals(Difficulty.EASY.toString())) {
                 game.setDifficulty(Difficulty.EASY);
             } else {
@@ -106,13 +142,19 @@ public class SudokuService {
         } catch (Exception e) {
             return false;
         }
-
         game.getPuzzle().setPuzzle(sudokuMatrix, originalMasks);
         game.setMasks(masks);
-
         return true;
     }
 
+    /**
+     * Applies settings to language and game and then saves them to a file.
+     * 
+     * @param language Users choice of language, English or Finnish
+     * @param difficulty Users choice of difficulty, Easy or Hard
+     * @param showMistakes indicates whether incorrectly placed cells are shown
+     * on the Sudoku scene
+     */
     public void applySettings(Language language, Difficulty difficulty, boolean showMistakes) {
         Message.setLanguage(language);
         settings.setDifficulty(difficulty);
@@ -121,17 +163,26 @@ public class SudokuService {
         saveSettings();
     }
 
+    /**
+     * Saves settings to a file.
+     * 
+     * @return true on success
+     */
     public boolean saveSettings() {
         try {
             settingsDao.saveFile(Message.getLanguage().toString(),
                     settings.getDifficulty().toString(), String.valueOf(settings.isShowMistakes()));
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             return false;
         }
         return true;
     }
 
+    /**
+     * Loads settings from a file.
+     * 
+     * @return true on success
+     */
     public boolean loadSettings() {
         try {
             String[] loadFile = settingsDao.loadFile();
@@ -168,25 +219,38 @@ public class SudokuService {
         return true;
     }
 
-    public void insertGame(int time) {
+    /**
+     * Inserts a game that has been completed to a database.
+     * 
+     * @param time The time that it took to complete a game
+     * @return true on success
+     */
+    public boolean insertGame(int time) {
         try {
             statisticsDao.insertGame(time);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            return false;
         }
 
         loadStatistics();
+        return true;
     }
 
-    public void loadStatistics() {
-        int[] data = new int[4];
+    /**
+     * Loads game statistics from a database.
+     * 
+     * @return true on success
+     */
+    public boolean loadStatistics() {
+        int[] data;
         try {
             data = statisticsDao.getAll();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             statistics.setAll(0, 0, 0, 0);
+            return false;
         }
         statistics.setAll(data[0], data[1], data[2], data[3]);
+        return true;
     }
-
+    
 }

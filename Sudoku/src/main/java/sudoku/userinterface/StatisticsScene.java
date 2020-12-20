@@ -50,35 +50,35 @@ public class StatisticsScene implements IScene {
     public void exitGame() {
         stage.close();
     }
-    
+
     @Override
     public Scene sceneLayout() {
         BorderPane root = new BorderPane();
         root.setCenter(setLayout());
         root.setBottom(addAnchorPane());
-        
+
         return new Scene(root, 1280, 720);
     }
-    
-    private VBox setLayout(){
-        VBox layout = new VBox(); 
-        
+
+    private VBox setLayout() {
+        VBox layout = new VBox();
+
         ArrayList<Label> items = new ArrayList();
 
-        items.add(new Label(Message.GAMESPLAYED()));
-        items.add(new Label(Message.AVGLENGTH()));
-        items.add(new Label(Message.MAXLENGTH()));
-        items.add(new Label(Message.MINLENGTH()));
-        
+        items.add(new Label(Message.gamesPlayed()));
+        items.add(new Label(Message.avgLength()));
+        items.add(new Label(Message.maxLength()));
+        items.add(new Label(Message.minLength()));
+
         items.add(new Label(statistics.getCount()));
         items.add(new Label(statistics.getAvg()));
         items.add(new Label(statistics.getMax()));
         items.add(new Label(statistics.getMin()));
-        
+
         items.forEach(item -> {
             item.setFont(new Font(18));
         });
-        
+
         GridPane grid = new GridPane();
 
         for (int x = 0; x < 2; x++) {
@@ -92,18 +92,18 @@ public class StatisticsScene implements IScene {
             rc.setVgrow(Priority.ALWAYS);
             grid.getRowConstraints().add(rc);
         }
-        
+
         for (int i = 0; i < 4; i++) {
             grid.add(items.get(i), 0, i);
         }
-        
-        for (int i = 4; i < 8; i++){
-            grid.add(items.get(i), 1, i-4);
+
+        for (int i = 4; i < 8; i++) {
+            grid.add(items.get(i), 1, i - 4);
         }
-        
+
         grid.setMaxSize(400, 200);
         grid.setMinSize(400, 200);
-        
+
         layout.getChildren().add(grid);
         layout.setSpacing(30);
         layout.setPadding(new Insets(40, 40, 40, 40));
@@ -113,7 +113,7 @@ public class StatisticsScene implements IScene {
 
     private HBox addAnchorPane() {
         AnchorPane anchorpane = new AnchorPane();
-        Button btnMenu = new Button(Message.BACKTOMENU());
+        Button btnMenu = new Button(Message.backToMenu());
 
         btnMenu.setOnAction(e -> {
             changeScene(menuScene);
