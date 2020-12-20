@@ -23,6 +23,7 @@ Kyseessä on klassinen Sudoku-peli. Toimii suomeksi ja englanniksi. Kaksi valitt
 <h2>Komentorivitoiminnot</h2>
 
 <h3>Testaus</h3>
+
 Testit suoritetaan komennolla
 
 ```
