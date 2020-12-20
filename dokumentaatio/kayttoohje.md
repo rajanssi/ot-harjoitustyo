@@ -17,7 +17,7 @@ dbUrl=jdbc:sqlite:statistics.db
 Ohjelma käynnistetään komennolla 
 
 ```
-Sudoku-2.0.jar
+java -jar Sudoku-2.0.jar
 ```
 
 ## Pelin aloittaminen
