@@ -21,4 +21,5 @@
 |14-15.12| 5 | koodaus |
 |16-18.12| 10| koodaus |
 |19.12   | 5 | koodaus, testaus, javadoc, dokumentointi |
-| yht    |88  | |
+|20.12   | 4 | testaus, dokumentointi |
+| yht    |92  | |
