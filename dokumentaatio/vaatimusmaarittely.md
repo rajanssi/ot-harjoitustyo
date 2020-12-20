@@ -2,39 +2,34 @@
 
 ## Sovelluksen tarkoitus
 
-Sovellus on klassinen 9x9 Sudoku. Lähtökohtaisesti sovellus on siis hyvin simppeli systeemi, jossa ei ole käyttäjärooleja, mutta ajan salliessa siihen voidaan lisätä erilaisia bonus ominaisuuksia.
+Sovellus on pohjimmiltaan klassisen 9x9 Sudoku-peli. Sovellus on kaksikielinen ja sen voi saada toimimaan suomeksi tai englanniksi. Sovellus tarjoaa eri vaikeustasoja, joita käyttäjä voi vapaasti vaihtaa asetuksista. Sovelluksesta näkyy myös tilastoja omista Sudokusuorituksista.
 
-## Käyttöliittymäluonnos
+## Käyttöliittymä ja perustoiminallisuus
 
-Käyttöliittymä tulee vastaamaan laajalti suoku.com:in mukaista näkymää, jossa näkyy Sudoku ruudukko ja nappeja numeroiden valitsemiseksi. Numeroita voi myös syöttää suoraan näppäimistöltä.
+Sovellus koostuu neljästä näkymästä. Käyttöliittymä käynnistyy valikkoon, josta käyttäjä voi aloittaa uuden pelin, siirtyä asetuksiin tai katsella tilastoja. Valikkonäkymästä voi myös jatkaa tallennettua peliä, jos sellainen on olemassa. 
 
-## Perusversion tarjoama toiminnallisuus
+<img src="https://raw.githubusercontent.com/rajanssi/ot-harjoitustyo/master/dokumentaatio/kuvat/c-1.png" width="500">
 
-Sovellus aukeaa suoraan satunnaisesti generoituun Sudoku-ruudukkoon, josta on mahdollisuus aloitta ratkomaan Sudokua, valita uusi peli tai poistua sovelluksesta.
+Asetuksissa käyttäjä voi vaihtaa käyttöliittymän kieltä, pelin vaikeustasoa tai virheelliseten sudokuruutujen näyttämistä. Asetukset pysyväistallennetaan ja seuraavalla kerralla sovellusta käynnistäessä ne ovat samat, kuin mitkä edellisellä kerralla määriteltiin.
 
-Sudokun ratkaisun jälkeen ruudulle tulee viesti, jossa ilmoitetaan Sudokun ratkenneen ja kysytään, haluaako käyttäjä pelata uudestaan.
+<img src="https://raw.githubusercontent.com/rajanssi/ot-harjoitustyo/master/dokumentaatio/kuvat/c-2.png" width="500">
 
-### Tehty 
-#### (24.11):
-- Sovellus aukeaa kovakoodattuun Sudoku-ruudukkoon
-- Sudokun ratkettua käyttäjälle ilmoitetaan siitä viestill
-#### (2.12):
-- Sovellus generoi nyt satunnaisesti uuden Sudoku-ruudukon ohjelmaa käynnistäessä, pelin jälkeen tai nappia painamalla
-- Nappia painamalla voi aloittaa uuden pelin 
-#### (8.12):
-- Käyttöliittymän Sudokuruudukko on nyt pitkälti valmis. Muut käyttöliittymän osat pitää vielä luoda ja sijoitella.
-- Peliin kuluvaa aikaa seurataan nyt Timer luokan avulla ja se näytetään käyttäjälle.
-- Peli tallettuu lopetuksen yhteydessä (joskin peliä ei voi vielä ladata, joten toiminto ei näy käyttäjälle).
+Pelinäkymässä käyttäjä syöttää näppäimistöllä numeroita sudokuruudukkoon. Poistuessaan sovelluksesta tai palatessaan päävalikkoon käynnissä oleva peli tallennetaan automaattisesti ja sitä voi jatkaa myöhemmin siitä mihin jäätiin. Pelinäkymästä voi myös suoraan aloittaa uuden pelin.
+
+<img src="https://raw.githubusercontent.com/rajanssi/ot-harjoitustyo/master/dokumentaatio/kuvat/c-3.png" width="500">
+
+Ratkaistuaan sudokun, käyttäjälle ilmoitetaan siitä ja kysytään, haluaako hän pelata uudelleen. 
+
+<img src="https://raw.githubusercontent.com/rajanssi/ot-harjoitustyo/master/dokumentaatio/kuvat/c-4.png" width="200">
+
+Tilastonäkymässä voi katsella onnistuneesti ratkaistujen pelien tilastoja.
+
+<img src="https://raw.githubusercontent.com/rajanssi/ot-harjoitustyo/master/dokumentaatio/kuvat/c-5.png" width="500">
 
 ## Jatkokehitysideoita
 
-Perusversion jälkeen järjestelmää täydennetään ajan salliessa esim. seuraavilla toiminnallisuuksilla
-
-- Keskeneräisen pelin tallettaminen
-- Eri vaikeustasoja
+- Hienompi käyttöliittymä, mahdollisuus toimia ilman näppäimistöä
 - Vinkkinappi, joka paljastaa ruutuja
-- Käyttöliittymä näyttää, mitkä ruudut ovat väärin (jos ne ovat väärin)
 - Mahdollisuus kirjoittaa numeromuistiinpanoja ruutuihin
 - Useita käyttäjätunnuksia samalla koneella, ja mahdollisuus kirjautua ulos/sisään
-- Sudokun ratkaisuun käytetyn ajan mittaaminen ja parhaimpien suoritusten mahdollinen tallettaminen listalle
 - Suoritusten mahdollinen tallentaminen verkkoon ranking-listalle
