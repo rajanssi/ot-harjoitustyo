@@ -33,7 +33,7 @@ Klikkaa jotain tyhjää ruutua johon haluat syöttää arvauksesi. Syötä sitte
 
 ### Uuden pelin aloittaminen
 
-Uuden pelin voi aloittaa "New game" nappia painamalla pelinäkymässä. Myös ratkaisemalla Sudokun, peli kysyy, jos haluat pelata uudestaan.
+Uuden pelin voi aloittaa "Uusi peli"/"New game" nappia painamalla pelinäkymässä. Myös ratkaisemalla Sudokun, peli kysyy, jos haluat pelata uudestaan.
 
 ### Pelin tallentaminen
 
@@ -41,7 +41,7 @@ Sulkiessasi sovelluksen tai siirtymällä takaisin valikkoon käynnissä oleva p
 
 ### Pelin jatkaminen
 
-Jos jätät pelin kesken, se tallennetaan ja voit jatkaa sitä myöhemmin päävalikon "jatka peliä" nappulaa painamalla.
+Jos jätät pelin kesken, se tallennetaan ja voit jatkaa sitä myöhemmin päävalikon "Jatka peliä"/"Continue game" nappulaa painamalla.
 
 ## Asetukset
 
@@ -65,4 +65,4 @@ Täältä näet tilastoja onnistuneesti suorittamistasi peleistä. Takaisin vali
 
 ## Ohjelmasta poistuminen
 
-Voit poistua ohjelmasta milloin tahansa painamalla ruksia yläoikealta. Jos sinulla on peli kesken, se tallennetaan tiedostoon ja voit jatkaa siitä mihin jäit. 
+Voit poistua ohjelmasta milloin tahansa painamalla ruksia yläoikealta. Jos sinulla on peli kesken, se tallennetaan tiedostoon ja voit jatkaa siitä mihin jäit. Ohjelmasta voi poistua myös päävalikon "Sulje"/"Quit" napin avulla.
