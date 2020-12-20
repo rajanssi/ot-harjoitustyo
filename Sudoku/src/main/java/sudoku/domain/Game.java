@@ -64,7 +64,7 @@ public class Game {
      * Returns a Puzzle object that contains all the cells of a puzzle and
      * methods for creating new puzzles.
      *
-     * @see Puzzle
+     * @see Puzzle  
      *
      * @return Puzzle object
      */

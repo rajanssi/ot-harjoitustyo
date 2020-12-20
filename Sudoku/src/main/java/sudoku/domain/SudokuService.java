@@ -87,7 +87,7 @@ public class SudokuService {
         game.getPuzzle().setPuzzle(settings.getDifficulty());
         game.initMasks();
         game.setGameTime(0);
-    }
+    }   
 
     /**
      * Saves current game to a file.

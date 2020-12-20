@@ -2,6 +2,7 @@ package dao;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Arrays;
 import org.junit.After;
 import org.junit.Assert;
 import static org.junit.Assert.*;
@@ -36,16 +37,14 @@ public class DbStatisticsDaoTest {
     
     @Test
     public void newGameCanBeInserted() {
-        service.insertGame(20);
-        
-        assertEquals("1", service.getStatistics().getCount());
+        statisticsDao.insertGame(20);
+        assertEquals(4, statisticsDao.getAll().length);
     }
     
     @Test
-    public void daoWillReturnCorrectValues(){
-        service.insertGame(20);
-        service.insertGame(40);
-        service.loadStatistics();
+    public void willReturnCorrectValues(){
+        statisticsDao.insertGame(20);
+        statisticsDao.insertGame(40);
         int[] expected = {2,30,20,40};
         Assert.assertArrayEquals(expected, statisticsDao.getAll());
     }

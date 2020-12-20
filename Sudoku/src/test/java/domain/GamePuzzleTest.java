@@ -3,15 +3,13 @@ package domain;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import sudoku.dao.DbStatisticsDao;
-import sudoku.dao.FileGameDao;
-import sudoku.dao.FileSettingsDao;
+import sudoku.domain.Difficulty;
 import sudoku.domain.Game;
 import sudoku.domain.Settings;
 import sudoku.domain.Statistics;
 import sudoku.domain.SudokuService;
 
-public class GameTest {
+public class GamePuzzleTest {
 
     SudokuService service;
     Settings settings;
@@ -20,16 +18,7 @@ public class GameTest {
 
     @Before
     public void setUp() {
-        String dbUrl = "jdbc:sqlite:statistics_test.db";
-
-        FileGameDao gameDao = new FileGameDao("saveFile_test.csv");
-        FileSettingsDao settingsDao = new FileSettingsDao("settings_test.csv");
-        DbStatisticsDao statisticsDao = new DbStatisticsDao(dbUrl);
-
-        service = new SudokuService(gameDao, settingsDao, statisticsDao);
-        settings = service.getSettings();
-        statistisc = service.getStatistics();
-        game = service.getGame();
+        game = new Game(Difficulty.HARD);
 
         boolean masks[][] = {{true, false, false, false, false, false, false, false, false},
         {false, false, false, false, false, false, false, false, false},
@@ -42,6 +31,7 @@ public class GameTest {
         {false, false, false, false, false, false, false, false, false},
         {false, false, false, false, false, false, false, false, true}};
 
+        game.getPuzzle().setPuzzle(Difficulty.HARD);
         game.setMasks(masks);
     }
 
@@ -91,4 +81,13 @@ public class GameTest {
         game.checkCell(8, 8, value);
         assertTrue(game.checkComplete());
     }
+    
+    @Test
+    public void returnsCorrectDifficultu(){
+        game.setDifficulty(Difficulty.HARD);
+        Difficulty d = game.getDifficulty();
+        assertEquals(Difficulty.HARD, d);
+    }
+    
+
 }
