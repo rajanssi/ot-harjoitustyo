@@ -1,5 +1,5 @@
 <h1>Sudokusovellus</h1>
-Kyseessä on klassinen Sudoku-peli. Ajan salliessa sovellukseen voi lisätä itse asian lisäksi kaikkea muuta hyödyllistä tilpehööriä.
+Kyseessä on klassinen Sudoku-peli. Toimii suomeksi ja englanniksi. Kaksi valittavissa olevaa vaikeustasoa.
 <h2>Dokumentaatio</h2>
 
 [Käyttöohje](https://github.com/rajanssi/ot-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md)
