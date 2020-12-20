@@ -2,6 +2,8 @@
 Kyseessä on klassinen Sudoku-peli. Ajan salliessa sovellukseen voi lisätä itse asian lisäksi kaikkea muuta hyödyllistä tilpehööriä.
 <h2>Dokumentaatio</h2>
 
+[Käyttöohje](https://github.com/rajanssi/ot-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md)
+
 [Vaatimusmäärittely](https://github.com/rajanssi/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
 
 [Työaikakirjanpito](https://github.com/rajanssi/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
@@ -13,6 +15,8 @@ Kyseessä on klassinen Sudoku-peli. Ajan salliessa sovellukseen voi lisätä its
 [Viikko 5](https://github.com/rajanssi/ot-harjoitustyo/releases/tag/viikko5)
 
 [Viikko 6](https://github.com/rajanssi/ot-harjoitustyo/releases/tag/viikko6)
+
+[Final release](https://github.com/rajanssi/ot-harjoitustyo/releases/tag/viikko7)
 
 <h2>Komentorivitoiminnot</h2>
 
