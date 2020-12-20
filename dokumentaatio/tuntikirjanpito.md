@@ -17,4 +17,8 @@
 |5-6.12  | 5 | koodaus, suunnittelu |
 |7.12    | 5 | koodaus, suunnittelu |
 |8.12    | 5 | koodaus, javadoc, testaus, dokumentointi |
-| yht    |58  | |
+|11-13.12| 10| koodaus, refaktoroinnin suunnittelu |
+|14-15.12| 5 | koodaus |
+|16-18.12| 10| koodaus |
+|19.12   | 5 | koodaus, testaus, javadoc, dokumentointi |
+| yht    |88  | |
