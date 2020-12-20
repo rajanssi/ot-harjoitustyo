@@ -10,6 +10,8 @@ Kyseessä on klassinen Sudoku-peli. Ajan salliessa sovellukseen voi lisätä its
 
 [Arkkitehtuurikuvaus](https://github.com/rajanssi/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
 
+[Testausdokumentti](https://github.com/rajanssi/ot-harjoitustyo/blob/master/dokumentaatio/testausdokumentti.md)
+
 <h2>Releaset</h2>
 
 [Viikko 5](https://github.com/rajanssi/ot-harjoitustyo/releases/tag/viikko5)
